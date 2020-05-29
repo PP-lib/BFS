@@ -11,7 +11,7 @@ import os
 
 # -------------------------------------
 key = '	ScdrTUJ6AkYX1Fwk3u6kWe'
-secret = 't81+1ptGH5wdkxITxxJkf21zBy+NUrVaNqaD4971zI4='
+secret = 't81+1ptGH5wdkxITxxJkf21zBy+NUrVaNqaD4971zI4='a
 
 end_point = 'wss://ws.lightstream.bitflyer.com/json-rpc'
 
