@@ -11,7 +11,7 @@ strategy_yaml: strategy/disp_board2.yaml
 # 取引所の apikey, secret を記述
 # ----------------------------------------------------------
 apikey: 'ScdrTUJ6AkYX1Fwk3u6kWe'
-secret: 't81+1ptGH5wdkxITxxJkf21zBy+NUrVaNqaD4971zI4='a
+secret: 't81+1ptGH5wdkxITxxJkf21zBy+NUrVaNqaD4971zI4='
 
 product: FX_BTC_JPY              # 取引マーケット
 
