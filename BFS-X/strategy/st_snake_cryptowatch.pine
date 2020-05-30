@@ -1,0 +1,64 @@
+//@version=3
+
+//-----------BF
+strategy("snake", overlay = true)
+
+
+fromyear = input(2017, minval = 2017, maxval = 2100, title = "From Year")
+frommonth = input(1, minval = 01, maxval = 12, title = "From Month")
+fromday = input(1, minval = 01, maxval = 31, title = "From day")
+toyear = input(2100, minval = 1900, maxval = 2100, title = "To Year")
+tomonth = input(12, minval = 01, maxval = 12, title = "To Month")
+today = input(31, minval = 01, maxval = 31, title = "To day")
+timescale = (time > timestamp(fromyear, frommonth, fromday, 00, 00) and time < timestamp(toyear, tomonth, today, 00, 00))
+
+use_sma_trend = input(type=bool, defval=true)
+use_start_or_close = input(type=bool, defval=false)
+channel_length = input(24)
+distance = input(0)
+len1 = input(190, step=10)
+delay = input(9)
+plot_graph = input(type=bool, defval=true)
+
+get_high(ss,len) =>
+    out = ss
+    for i=1 to len
+        out := ss[i] > out ? ss[i] : out
+
+get_low(ss,len) =>
+    out = ss
+    for i=1 to len
+        out := ss[i] < out ? ss[i] : out
+
+hi = (use_start_or_close==false)? get_high(high,channel_length) : max(get_high(open,channel_length),get_high(close,channel_length))
+lo = (use_start_or_close==false)? get_low(low,channel_length) : min(get_low(open,channel_length),get_low(close,channel_length))
+sma1 = sma(close,len1)
+age = sma1 > sma1[delay]
+sage = not age
+
+plot(hi,color=plot_graph==true?red:white)
+plot(lo,color=plot_graph==true?blue:white)
+plot(sma1,color=plot_graph==true?black:white)
+bgcolor(plot_graph==true?(age?color(green,90):color(red,90)):white)
+
+if timescale
+    flag = false
+    // 高値・安値・トレンドが変化したらストップオーダーキャンセル
+    strategy.cancel_all(when=(hi!=hi[1] or lo!=lo[1] or age!=age[1]))
+
+    if strategy.position_size == 0
+        strategy.entry("buy",true,stop=hi+distance,when=age)
+        strategy.entry("sell",false,stop=lo-distance,when=sage)
+
+    if 0 < strategy.position_size
+        if use_sma_trend==true
+            strategy.order("close-buy", strategy.short,stop=lo-distance)
+        else
+            strategy.entry("doten-sell",false,stop=lo-distance)
+
+    if strategy.position_size < 0
+        if use_sma_trend==true
+            strategy.order("close-sell", strategy.long,stop=hi+distance)
+        else
+            strategy.entry("doten-buy",true,stop=hi+distance)
+

@@ -1,0 +1,19 @@
+//@version=3
+// FXBTCJPY 120min
+strategy(title = "st_sma_cryptowatch", overlay = true, default_qty_type = strategy.fixed, initial_capital=1000, currency="JPY", default_qty_value = 1)
+
+s_sma = input(title="Short SMA", type=integer, minval=2, defval=13)
+l_sma = input(title="Short SMA", type=integer, minval=2, defval=19)
+trend_rate = input(title="Trend Rate", type=float, minval=0, defval=0.001,step=0.0001)
+
+short_sma=sma(close,s_sma)
+long_sma=sma(close,l_sma)
+
+if strategy.position_size==0 and long_sma-long_sma[1]<long_sma*trend_rate and long_sma>long_sma[1] and long_sma<short_sma and long_sma[1]>short_sma[1]
+    strategy.entry("BUY", strategy.long)
+if strategy.position_size > 0 and short_sma[1]>short_sma
+    strategy.close("BUY")
+if strategy.position_size==0 and long_sma[1]-long_sma<long_sma*trend_rate and long_sma<long_sma[1] and long_sma>short_sma and long_sma[1]<short_sma[1]
+    strategy.entry("SELL", strategy.short)
+if strategy.position_size < 0 and short_sma[1]<short_sma
+    strategy.close("SELL")
