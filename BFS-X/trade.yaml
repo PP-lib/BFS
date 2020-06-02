@@ -4,8 +4,8 @@
 #      例) python3 trade.py strategy/st_mfi.py strategy/st_mfi.yaml
 #----------------------------------------------------------
 
-strategy_py:   strategy/disp_board2.py
-strategy_yaml: strategy/disp_board2.yaml
+strategy_py:   strategy/mm_volume2.py
+strategy_yaml: strategy/mm_volume2.yaml
 
 # ----------------------------------------------------------
 # 取引所の apikey, secret を記述
@@ -18,7 +18,7 @@ product: FX_BTC_JPY              # 取引マーケット
 console_output : true            # これをfalseにしたら、コンソール出力を行わず、代わりにstrategyで指定されたログフォルダに console.txt というファイルで出力する
                                  # nohupなどで起動する場合に使用。(その場合は tail-f console.txt で稼働状況をチェックできる)
                                  # console.txtファイルは日付が変わる時にいったん削除されます
-adjust_position_with_api : false # 定期的にAPIでポジション取得してズレがあれば補正する
+adjust_position_with_api : true # 定期的にAPIでポジション取得してズレがあれば補正する
 check_cross_trade : true         # 約定履歴に流れてこないけどgetchildordersで確認して残数がなければ対当売買として処理する
 api_limit2 : 80                  # 1分間の発注数(0.1以下のもの)がこの回数に達するとポジションクローズしてapi_pending_time秒の待機を行います。
 api_pending_time: 180            # api_limitに到達した際に待機する時間（秒）
@@ -34,12 +34,12 @@ execution_check_with_public_channel : False
 # ----------------------------------------------------------
 #pos_server : ['localhost', 51000]   # ポジションサーバーを利用する場合にはコメントアウトしてください。
 
-pos_server_graph_period : 6          # 何時間分のグラフをプロットするか
-pos_server_discord : ''              # グラフの送信先webhook
+pos_server_graph_period : 1          # 何時間分のグラフをプロットするか
+pos_server_discord : 'https://discordapp.com/api/webhooks/716283661221363776/3qIHpRHDG5LmVflzo7rWu6S8uFytV1ssto53jSbvFQsgNpIq3-6XTVc81IlF_joQuoVy'              # グラフの送信先webhook
 pos_server_discord_interval : 5      # 何分毎にDiscordへ通知するか
-pos_server_discord_send_text : false # 各botの損益をテキストでDiscordへ通知するか
+pos_server_discord_send_text : true# 各botの損益をテキストでDiscordへ通知するか
 pos_server_discord_bitflyer_color : false
-adjust_max_size : 0.5                # ポジズレの補正時に最大何btcの補正を行うか（大きくずれた際に一度に補正しないように）
+adjust_max_size : 0.02                # ポジズレの補正時に最大何btcの補正を行うか（大きくずれた際に一度に補正しないように）
 
 #pos_server_discord_influxdb : ['localhost', 8086] # InfluxDBへ損益を登録する場合にはコメントアウトしてください。
 

@@ -19,7 +19,7 @@ parameters:                       # 下記パラメータはself._strategy_confi
   interval : 0.0                  # 前回エントリーからこの秒数は次のエントリーを保留して、エントリー頻度を制御
 
   # 1回で出すロット
-  lotsize : 0.03                  # エントリーロットサイズ
+  lotsize : 0.01                  # エントリーロットサイズ
   max_lot : 0.5                   # 最大ロットサイズ。現在ポジションがこの数値を超える場合には積み増す方向のエントリーを抑制
 
 
@@ -65,12 +65,12 @@ close_position :  false # 指値をポジションクローズ方向のみの置
 # --------------------------------------------------------------------------------------------------------------------
 # 通知機能  (trade.pyの動作に影響を与えるパラメータ)
 # --------------------------------------------------------------------------------------------------------------------
-profit_discord_webhooks: ''     # 損益履歴通知用 discord webhook
+profit_discord_webhooks: 'https://discordapp.com/api/webhooks/716283661221363776/3qIHpRHDG5LmVflzo7rWu6S8uFytV1ssto53jSbvFQsgNpIq3-6XTVc81IlF_joQuoVy'     # 損益履歴通知用 discord webhook
 profit_interval : 60            # 損益履歴通知期間(分)
-disp_realized_profit : false    # 損益履歴グラフに確定損益も表示させる
-disp_position : false           # 損益履歴グラフにポジションも表示させる
+disp_realized_profit : true    # 損益履歴グラフに確定損益も表示させる
+disp_position : true           # 損益履歴グラフにポジションも表示させる
 
-position_discord_webhooks: ''   # ポジ履歴通知用 discord webhook
+position_discord_webhooks: 'https://discordapp.com/api/webhooks/716283661221363776/3qIHpRHDG5LmVflzo7rWu6S8uFytV1ssto53jSbvFQsgNpIq3-6XTVc81IlF_joQuoVy'   # ポジ履歴通知用 discord webhook
 position_interval : 5           # ポジ履歴通知期間(分)
 display_normal : 100            # ポジショングラフの背景を変化させる閾値（msec）
 display_busy   : 1000           # ポジショングラフの背景を変化させる閾値（msec）
